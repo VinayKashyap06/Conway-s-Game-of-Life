@@ -18,6 +18,7 @@ namespace Commons
         public int gridSizeY;
         public Color aliveColor;
         public Color deadColor;
+        public float timeStep;
 
         public GameObject GetVisualPrefab(e_VisualType visualType)
         {

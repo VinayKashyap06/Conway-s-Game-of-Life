@@ -13,6 +13,7 @@ namespace Commons
         private static Color deadColor;
         private static int gridSizeX=6;
         private static int gridSizeY = 6;
+        private static float maxTimeStep=0.5f;
         #endregion
 
         #region Getters and Setters
@@ -59,6 +60,17 @@ namespace Commons
             set
             {
                 gridSizeY = value;
+            }
+        }
+        public static float MaxTime
+        {
+            get
+            {
+                return maxTimeStep;                
+            }
+            set
+            {
+                maxTimeStep = value;
             }
         }
         #endregion

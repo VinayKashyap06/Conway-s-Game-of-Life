@@ -20,6 +20,10 @@ namespace UiSystem
         private TMP_InputField yInputField;
         [SerializeField]
         private TextMeshProUGUI generationText;
+        [SerializeField]
+        private TextMeshProUGUI playText;
+        [SerializeField]
+        private TextMeshProUGUI timeText;
 
         private void Start()
         {
@@ -28,6 +32,7 @@ namespace UiSystem
             {
                 ServiceGame.Instance.StartSimulation();
                 startButton.interactable = false;
+                playText.gameObject.SetActive(false);
             });
 
             stopButton.onClick.AddListener(()=> 
@@ -39,15 +44,17 @@ namespace UiSystem
             xInputField.onValueChanged.AddListener((string value)=>
             {
                 Globals.GridSizeX = int.Parse(value);
-                Debug.Log("Value"+Globals.GridSizeX);
+               // Debug.Log("Value"+Globals.GridSizeX);
             });
             yInputField.onValueChanged.AddListener((string value)=> 
             {
                 Globals.GridSizeY = int.Parse(value);
-                Debug.Log("Value" + Globals.GridSizeY);
+               // Debug.Log("Value" + Globals.GridSizeY);
             });
 
             ServiceGame.Instance.SetGenText(generationText);
+            ServiceGame.Instance.SetTimeText(timeText);
+
         }       
     }
 }

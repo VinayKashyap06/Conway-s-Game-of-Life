@@ -24,3 +24,4 @@ MonoBehaviour:
   gridSizeY: 5
   aliveColor: {r: 0.31083095, g: 1, b: 0, a: 0}
   deadColor: {r: 1, g: 0, b: 0, a: 0.81960785}
+  timeStep: 0.6
