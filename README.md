@@ -30,3 +30,10 @@ Has scriptable Object and sets Global settings. It's a high level class to provi
 
 ## Globals:
 1. Static class with variables to be used everywhere.
+
+# Modes
+- 2D Array based game. Ignore Edges
+- Circular Wrap Around Game. Takes Edges
+
+
+**Note: Remove TypeDef to change modes**
