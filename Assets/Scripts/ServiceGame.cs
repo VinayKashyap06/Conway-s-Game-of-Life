@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Commons;
 using GameSystem.Controllers;
+using TMPro;
 using UnityEngine;
 
 namespace GameSystem
@@ -17,7 +18,7 @@ namespace GameSystem
         #region Private Properties
 
         private float timeelapsed;
-        private float Max_TIME = 2f;
+        private float Max_TIME = .5f;
         private ControllerGrid controllerGrid;
         #endregion
 
@@ -56,6 +57,12 @@ namespace GameSystem
         {
             controllerGrid.StartSimulation(Globals.GridSizeX, Globals.GridSizeY);
         }
+
+        public void SetGenText(TextMeshProUGUI generationText)
+        {
+            controllerGrid.SetGenText(generationText);
+        }
+
         public void StopSimulation()
         {
             controllerGrid.StopSimulation();

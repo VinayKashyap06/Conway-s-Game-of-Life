@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Commons;
+using TMPro;
 
 namespace GameSystem.Controllers
 {    
@@ -15,6 +16,8 @@ namespace GameSystem.Controllers
         private int currentGridSizeY;
         private GameObject gridParent;
         private bool simulate=false;
+        private int gen = 0;
+        private TextMeshProUGUI genText;
         #endregion
 
         #region Public_Methods
@@ -37,6 +40,9 @@ namespace GameSystem.Controllers
             if (!simulate)            
                 return;            
             CalculateNewGrid();
+            gen++;
+            genText.text ="Gen: "+gen.ToString();
+
         }
         public void SwitchPrefab(GameObject newPrefab)
         {
@@ -45,13 +51,15 @@ namespace GameSystem.Controllers
         public void StopSimulation()
         {
             simulate = false;
+            gen = 0;
+        }
+        public void SetGenText(TextMeshProUGUI generationText)
+        {
+            genText = generationText;
         }
 
         #endregion
-
-
         #region Private_Methods
-
         private void PrintNextGenElements()
         {
             for (int i = 0; i < currentGridSizeY; i++)
@@ -61,7 +69,7 @@ namespace GameSystem.Controllers
                     Debug.Log("<color=green> " + newStates[i, j] + "</color>");
                 }
             }
-        }
+        }    
         private void PrintOldGenElements()
         {
             for (int i = 0; i < currentGridSizeY; i++)

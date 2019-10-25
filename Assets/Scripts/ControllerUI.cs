@@ -18,10 +18,11 @@ namespace UiSystem
         private TMP_InputField xInputField;
         [SerializeField]
         private TMP_InputField yInputField;
+        [SerializeField]
+        private TextMeshProUGUI generationText;
 
         private void Start()
         {
-
             //Add listeners
             startButton.onClick.AddListener(()=> 
             {
@@ -45,6 +46,8 @@ namespace UiSystem
                 Globals.GridSizeY = int.Parse(value);
                 Debug.Log("Value" + Globals.GridSizeY);
             });
+
+            ServiceGame.Instance.SetGenText(generationText);
         }       
     }
 }
