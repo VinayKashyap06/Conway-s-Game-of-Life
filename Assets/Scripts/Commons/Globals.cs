@@ -6,11 +6,15 @@ namespace Commons
 {
     //demo of how static classes can be used
     public static class Globals
-    {       
+    {
+        #region Private static Properties
+
         private static Color aliveColor;
         private static Color deadColor;
-        private const int gridSize=6;
+        private static int gridSize=6;
+        #endregion
 
+        #region Getters and Setters
         //Getter and Setter
         public static Color AliveColor
         {
@@ -40,6 +44,11 @@ namespace Commons
             {
                 return gridSize;
             }
+            set
+            {
+                gridSize = value;
+            }
         }
+        #endregion
     }
 }

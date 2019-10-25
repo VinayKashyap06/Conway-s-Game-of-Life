@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Commons
 {
+    #region Enums
+
     //Visual type to select, comes from Scriptable Object
     public enum e_VisualType
     {
@@ -19,29 +21,35 @@ namespace Commons
         DEAD,
         ALIVE
     }
+    
+    #endregion
+
+    #region Data Structures
+    [Serializable]
+    public struct VisualData
+    {
+        public e_VisualType visualType;
+        public GameObject prefab;
+    }
+
 
     public class VisualInfo
     {
         public GameObject visual;
         public e_StateType currentState;
-        private Color visualColor;
+        private Material visualMat;
         
         //in built functions keeps controller code clean
         public void SetColor()
         {
-            if (visualColor==null)
+            if (visualMat==null)
             {
-                visualColor = visual.GetComponent<Renderer>().material.color;
+                visualMat = visual.GetComponentInChildren<Renderer>().material;
             }
-
-            if (currentState==e_StateType.DEAD)
-            {
-                visualColor = Globals.DeadColor;
-            }
-            else
-            {
-                visualColor = Globals.AliveColor;
-            }
+            visualMat.color = currentState==e_StateType.DEAD ? Globals.DeadColor : Globals.AliveColor;
+            //Debug.Log(visualColor);
         }
     }
+
+    #endregion
 }

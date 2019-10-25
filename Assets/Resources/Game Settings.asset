@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ca42b7a795b3a48884acd1b6340dfd, type: 3}
+  m_Name: Game Settings
+  m_EditorClassIdentifier: 
+  visualType: 2
+  visualData:
+  - visualType: 1
+    prefab: {fileID: 7529684971704440108, guid: 949373d91581d9947b45fa79ca308d19,
+      type: 3}
+  - visualType: 2
+    prefab: {fileID: 3122364740308097766, guid: dab311a79619aa947be684838f4b9ee4,
+      type: 3}
+  gridSize: 10
+  aliveColor: {r: 0.31083095, g: 1, b: 0, a: 0}
+  deadColor: {r: 0.4433962, g: 0.39110893, b: 0.39110893, a: 0}
