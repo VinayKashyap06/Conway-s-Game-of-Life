@@ -11,7 +11,8 @@ namespace Commons
 
         private static Color aliveColor;
         private static Color deadColor;
-        private static int gridSize=6;
+        private static int gridSizeX=6;
+        private static int gridSizeY = 6;
         #endregion
 
         #region Getters and Setters
@@ -38,15 +39,26 @@ namespace Commons
                 deadColor = value;
             }
         }
-        public static int GridSize
+        public static int GridSizeX
         {
             get
             {
-                return gridSize;
+                return gridSizeX;
             }
             set
             {
-                gridSize = value;
+                gridSizeX = value;
+            }
+        }
+        public static int GridSizeY
+        {
+            get
+            {
+                return gridSizeY;
+            }
+            set
+            {
+                gridSizeY = value;
             }
         }
         #endregion

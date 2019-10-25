@@ -6,66 +6,77 @@ namespace GameSystem.Controllers
 {    
     public class ControllerGrid : ITickable
     {
+        #region Private Properties
+
         private GameObject prefabToUse;
         private VisualInfo[,] previousGenGrid;
-        private VisualInfo[,] nextGenGrid;
         private int[,] newStates;
-        private int currentGridSize;
+        private int currentGridSizeX;
+        private int currentGridSizeY;
         private GameObject gridParent;
+        private bool simulate=false;
+        #endregion
 
-        public void StartSimulation(int gridSize)
+        #region Public_Methods
+        public void StartSimulation(int gridSizeX, int gridSizeY)
         {
+            Camera.main.transform.localPosition = new Vector3(Globals.GridSizeX / 2f, Globals.GridSizeY / 2f, -10f);
+            if (gridParent != null)
+                GameObject.Destroy(gridParent);
             gridParent = new GameObject("GridParent");
-            currentGridSize = gridSize;
-            previousGenGrid = new VisualInfo[gridSize, gridSize];
-            newStates = new int[gridSize,gridSize];
-            SetRandomGrid();
-            nextGenGrid = previousGenGrid;
-           // Debug.Log(" Old Grid elements :");
-            //PrintOldGenElements();
-            //CalculateNewGrid();
-            //Debug.Log(" New Grid elements :");
-            //PrintNextGenElements();
-        }
-        public void New()
-        {
-            //PrintOldGenElements();
-            CalculateNewGrid();
-         //   Debug.Log(" New Grid elements :");
-            //PrintNextGenElements();
-        }
-        private void PrintNextGenElements()
-        {
-            for (int i = 0; i < currentGridSize; i++)
-            {
-                for (int j = 0; j < currentGridSize; j++)
-                {
-                    Debug.Log("<color=green> " + nextGenGrid[i, j].currentState + "</color>");
-                }
-            }
-        }
+            currentGridSizeX = gridSizeX;
+            currentGridSizeY = gridSizeY;
 
+            previousGenGrid = new VisualInfo[gridSizeX, gridSizeY];
+            newStates = new int[gridSizeX,gridSizeY];
+            SetRandomGrid();
+            simulate = true;
+        }
+        public void Tick()
+        {
+            if (!simulate)            
+                return;            
+            CalculateNewGrid();
+        }
         public void SwitchPrefab(GameObject newPrefab)
         {
             prefabToUse = newPrefab;
         }
-
-        private void PrintOldGenElements()
+        public void StopSimulation()
         {
-            for (int i = 0; i < currentGridSize; i++)
+            simulate = false;
+        }
+
+        #endregion
+
+
+        #region Private_Methods
+
+        private void PrintNextGenElements()
+        {
+            for (int i = 0; i < currentGridSizeY; i++)
             {
-                for (int j = 0; j < currentGridSize; j++)
+                for (int j = 0; j < currentGridSizeX; j++)
                 {
-                    Debug.Log("<color=red> " + nextGenGrid[i, j].currentState + "</color>");
+                    Debug.Log("<color=green> " + newStates[i, j] + "</color>");
                 }
             }
         }
-
+        private void PrintOldGenElements()
+        {
+            for (int i = 0; i < currentGridSizeY; i++)
+            {
+                for (int j = 0; j < currentGridSizeX; j++)
+                {
+                    Debug.Log("<color=red> " + previousGenGrid[i, j].currentState + "</color>");
+                }
+            }
+        }
         private void SetRandomGrid()
         {
-            for (int i = 0; i < currentGridSize; i++)
+            for (int i = 0; i < currentGridSizeY; i++)
             {
-                for (int j = 0; j < currentGridSize; j++)
+                for (int j = 0; j < currentGridSizeX; j++)
                 {
                     previousGenGrid[i, j] = new VisualInfo();
                     previousGenGrid[i, j].currentState =(e_StateType)UnityEngine.Random.Range(0,2);                    
@@ -75,33 +86,29 @@ namespace GameSystem.Controllers
                     previousGenGrid[i, j].SetColor();
                 }
             }
-        }
-
+        }      
         private void CalculateNewGrid()
         {
-            for (int i = 0; i < currentGridSize; i++)
+            for (int i = 0; i < currentGridSizeY; i++)
             {
-                for (int j = 0; j < currentGridSize; j++)
+                for (int j = 0; j < currentGridSizeX; j++)
                 {
                     GetNewElementState(previousGenGrid, i,j);
                 }
             }
             SetNewStatesToNewGen();
-            previousGenGrid = nextGenGrid;
         }
-
         private void SetNewStatesToNewGen()
         {
-            for (int i = 0; i < currentGridSize; i++)
+            for (int i = 0; i < currentGridSizeY; i++)
             {
-                for (int j = 0; j < currentGridSize; j++)
+                for (int j = 0; j < currentGridSizeX; j++)
                 {
-                    nextGenGrid[i, j].currentState = (e_StateType) newStates[i,j];
-                    nextGenGrid[i, j].SetColor();
+                    previousGenGrid[i, j].currentState = (e_StateType) newStates[i,j];
+                    previousGenGrid[i, j].SetColor();
                 }
             }
         }
-
         private void GetNewElementState(VisualInfo[,] previousGenGrid, int x, int y)
         {
             int neighborCount = 0;
@@ -124,23 +131,17 @@ namespace GameSystem.Controllers
 
             if (IsDead(neighborCount,(int)previousGenGrid[x,y].currentState))
             {
-                newStates[x, y] = 0;
-               // nextGenGrid[x, y].currentState = e_StateType.DEAD;
-                //nextGenGrid[x, y].SetColor();
+                newStates[x, y] = 0;        
             }
             else 
             {
                 newStates[x, y] = 1;
-                //nextGenGrid[x, y].currentState = e_StateType.ALIVE;
-                //nextGenGrid[x, y].SetColor();
             }           
         }
-
         private bool EdgeCase(int x, int y)
         {
-            return (x - 1 < 0 || y - 1 < 0 || x + 1 >= currentGridSize || y + 1 >= currentGridSize); 
+            return (x - 1 < 0 || y - 1 < 0 || x + 1 >= currentGridSizeX || y + 1 >= currentGridSizeY); 
         }
-
         private bool IsDead(int neighborCount, int state)
         {
             if (state==1)
@@ -158,10 +159,6 @@ namespace GameSystem.Controllers
                     return true;
             }
         }
-
-        public void Tick()
-        {
-            New();
-        }
+        #endregion      
     }
 }

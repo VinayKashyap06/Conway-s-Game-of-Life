@@ -14,7 +14,8 @@ namespace Commons
         public List<VisualData> visualData;
 
         [Header("Global Properties")]
-        public int gridSize;
+        public int gridSizeX;
+        public int gridSizeY;
         public Color aliveColor;
         public Color deadColor;
 

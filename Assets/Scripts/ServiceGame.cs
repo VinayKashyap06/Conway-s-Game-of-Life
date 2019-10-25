@@ -25,18 +25,15 @@ namespace GameSystem
         protected override void OnInitalize()
         {
             base.OnInitalize();
-            SaveSettingsToGlobals();
-            Camera.main.transform.localPosition = new Vector3(gameSettings.gridSize / 2f, gameSettings.gridSize / 2f, -10f);
-           controllerGrid = new ControllerGrid();
+            SaveSettingsToGlobals();            
+            controllerGrid = new ControllerGrid();
         }
-
         #endregion
 
         #region Unity_Methods
         private void Start()
         {
-            SwitchVisual(gameSettings.visualType);
-            StartSimulation(Globals.GridSize);
+            SwitchVisual(gameSettings.visualType);            
         }
         private void FixedUpdate()
         {
@@ -55,9 +52,13 @@ namespace GameSystem
             GameObject newPrefab = gameSettings.GetVisualPrefab(visualType);
             controllerGrid.SwitchPrefab(newPrefab);
         }
-        public void StartSimulation(int gridSize)
+        public void StartSimulation()
         {
-            controllerGrid.StartSimulation(gridSize);
+            controllerGrid.StartSimulation(Globals.GridSizeX, Globals.GridSizeY);
+        }
+        public void StopSimulation()
+        {
+            controllerGrid.StopSimulation();
         }
         #endregion
 
@@ -66,7 +67,8 @@ namespace GameSystem
         {
             Globals.AliveColor = gameSettings.aliveColor;
             Globals.DeadColor = gameSettings.deadColor;
-            Globals.GridSize = gameSettings.gridSize;            
+            Globals.GridSizeX = gameSettings.gridSizeX;
+            Globals.GridSizeY = gameSettings.gridSizeY;
         }
         #endregion
     }
